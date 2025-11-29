@@ -1,0 +1,43 @@
+{
+  "name": "convex-cache",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "exports": {
+    "./convex": "./dist/convex/index.js",
+    "./core/*": "./dist/convex-cache/core/*.js",
+    "./react": "./dist/convex-cache/adapters/react/index.js",
+    "./next": "./dist/convex-cache/adapters/next/index.js",
+    "./next/server": "./dist/convex-cache/adapters/next/server.js"
+  },
+  "bin": {
+    "convex-cache": "dist/cli/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "archive": "rm -rf archive && mkdir -p archive && bun run build && npm pack --pack-destination ./archive/"
+  },
+  "dependencies": {
+    "@bigbang-sdk/deep-equal": "^0.0.1",
+    "@bigbang-sdk/deep-sort": "^0.0.1",
+    "@bigbang-sdk/local-db": "^0.0.7",
+    "@bigbang-sdk/zod-json": "^0.0.9",
+    "commander": "^14.0.2",
+    "convex": "^1.29.3",
+    "convex-helpers": "^0.1.106",
+    "fast-glob": "^3.3.3",
+    "superjson": "^2.2.6",
+    "zod": "^4.1.13"
+  },
+  "peerDependencies": {
+    "next": "^16.0.4",
+    "react": "^19"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "typescript": "^5.9.3"
+  }
+}

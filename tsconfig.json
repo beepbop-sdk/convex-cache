@@ -1,0 +1,16 @@
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "outDir": "dist",
+    "rootDir": "src", // compile everything under the project root
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src/**/*"]
+}
