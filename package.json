@@ -1,7 +1,24 @@
 {
   "name": "convex-cache",
   "version": "0.0.0",
-  "main": "dist/index.js",
+  "description": "A library for caching Convex queries on the client and server",
+  "homepage": "https://github.com/bigbang-sdk/convex-cache",
+  "keywords": [
+    "convex-cache",
+    "convex",
+    "react",
+    "nextjs"
+  ],
+  "author": "Bigbang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bigbang-sdk/convex-cache.git"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "type": "module",
   "exports": {
     "./convex": "./dist/convex/index.js",
@@ -13,9 +30,6 @@
   "bin": {
     "convex-cache": "dist/cli/index.js"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "archive": "rm -rf archive && mkdir -p archive && bun run build && npm pack --pack-destination ./archive/"
@@ -37,6 +51,7 @@
     "react": "^19"
   },
   "devDependencies": {
+    "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "typescript": "^5.9.3"
   }
