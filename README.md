@@ -54,7 +54,7 @@ The client cache stores query results in IndexedDb, enabling instant page loads.
 
 ### Server Cache
 
-### Nextjs
+### Next.js
 
 The server cache (with Next.js) leverages Next.js's native caching system, integrating seamlessly with Cache Components and Partial Pre-Rendering (PPR). Queries are preloaded in server components and cached at the Next.js level. When data changes on Convex, the Next.js cache is automatically revalidated, ensuring pages always serve fresh data.
 
