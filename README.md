@@ -309,7 +309,7 @@ function UserList() {
 
 ## Zod Support
 
-If you prefer using Zod schemas instead of Convex validators, you can use `zQuery` instead of `vQuery`. This allows you to define your query schemas using Zod's powerful validation library.
+If you prefer using Zod schemas instead of Convex validators, you can use `zQuery` instead of `vQuery`. This allows you to define your query schemas using Zod's validation library.
 
 ### Setup zQuery
 
