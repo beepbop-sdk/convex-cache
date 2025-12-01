@@ -54,7 +54,9 @@ The client cache stores query results in IndexedDb, enabling instant page loads.
 
 ### Server Cache
 
-The server cache leverages Next.js's native caching system, integrating seamlessly with Cache Components and Partial Pre-Rendering (PPR). Queries are preloaded in server components and cached at the Next.js level. When data changes on Convex, the Next.js cache is automatically revalidated, ensuring pages always serve fresh data.
+### Nextjs
+
+The server cache (with Next.js) leverages Next.js's native caching system, integrating seamlessly with Cache Components and Partial Pre-Rendering (PPR). Queries are preloaded in server components and cached at the Next.js level. When data changes on Convex, the Next.js cache is automatically revalidated, ensuring pages always serve fresh data.
 
 <a aria-label="Server Cache Flowchart" href="https://github.com/bigbang-sdk/convex-cache">
   <picture>
@@ -76,6 +78,10 @@ The server cache leverages Next.js's native caching system, integrating seamless
 
 1. In order for the Next.js cache to be revalidated, at least one user needs to be connected to Convex at the time when Convex data changes for a query. If at least one user is connected, the cache is updated for all subsequent users of that query.
 2. In no user is connected to Convex at the time Convex data changes for a query, the next request will serve stale data on `preloadQuery` (which will be instantly revalidated once the page connects to Convex again along with Next.js cache).
+
+### Other frameworks for server caching
+
+`convex-cache` currently offers adapter for Next.js. However, custom adapters can be built for other frameworks / patterns by leveraging code from the `core` folder in `convex-cache` source code.
 
 ## Setup
 
