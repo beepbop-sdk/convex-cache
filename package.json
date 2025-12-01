@@ -2,18 +2,18 @@
   "name": "convex-cache",
   "version": "0.0.0",
   "description": "A library for caching Convex queries on the client and server",
-  "homepage": "https://github.com/bigbang-sdk/convex-cache",
+  "homepage": "https://github.com/beepbop-sdk/convex-cache",
   "keywords": [
     "convex-cache",
     "convex",
     "react",
     "nextjs"
   ],
-  "author": "Bigbang",
+  "author": "Beepbop",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bigbang-sdk/convex-cache.git"
+    "url": "https://github.com/beepbop-sdk/convex-cache.git"
   },
   "files": [
     "dist",
@@ -36,9 +36,9 @@
     "archive": "rm -rf archive && mkdir -p archive && bun run build && npm pack --pack-destination ./archive/"
   },
   "dependencies": {
-    "@bigbang-sdk/deep-equal": "^0.0.1",
-    "@bigbang-sdk/deep-sort": "^0.0.1",
-    "@bigbang-sdk/local-db": "^0.0.7",
+    "@bb-sdk/deep-equal": "^0.0.1",
+    "@bb-sdk/deep-sort": "^0.0.1",
+    "@bb-sdk/local-db": "^0.0.1",
     "commander": "^14.0.2",
     "convex": "^1.29.3",
     "convex-helpers": "^0.1.106",

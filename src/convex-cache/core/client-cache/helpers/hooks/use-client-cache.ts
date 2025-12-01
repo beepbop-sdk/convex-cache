@@ -1,4 +1,4 @@
-import { useLocalDb as useLocalDbDefault } from "@bigbang-sdk/local-db";
+import { useLocalDb as useLocalDbDefault } from "@bb-sdk/local-db";
 import { useEffect } from "react";
 import deepEqual from "fast-deep-equal";
 import { z } from "zod";

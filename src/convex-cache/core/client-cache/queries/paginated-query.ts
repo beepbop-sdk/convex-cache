@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import { PQ_Query, PQ_Args, PQ_Result, PQ_CachedResult } from "../../types/types/paginated-query";
 import type { T_SchemaMap } from "../../../types/schema-map";
 import { fetchSchemaFromMap } from "../../helpers/utils/fetch-schema-from-map";
-import { useLocalDb as useLocalDbDefault } from "@bigbang-sdk/local-db";
+import { useLocalDb as useLocalDbDefault } from "@bb-sdk/local-db";
 
 export type T_UseCachedPaginatedQueryClient<Q extends PQ_Query> = {
   query: Q;

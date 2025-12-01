@@ -5,7 +5,7 @@ import { useClientCache } from "../helpers/hooks/use-client-cache";
 import { useMemo } from "react";
 import { Q_Query, Q_Args, Q_Result } from "../../types/types/query";
 import type { T_SchemaMap } from "../../../types/schema-map";
-import { useLocalDb as useLocalDbDefault } from "@bigbang-sdk/local-db";
+import { useLocalDb as useLocalDbDefault } from "@bb-sdk/local-db";
 import { fetchSchemaFromMap } from "../../helpers/utils/fetch-schema-from-map";
 
 export type T_UseCachedQueryClient<Q extends Q_Query> = {

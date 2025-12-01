@@ -1,5 +1,5 @@
 import superjson from "superjson";
-import { deepSort } from "@bigbang-sdk/deep-sort";
+import { deepSort } from "@bb-sdk/deep-sort";
 import crypto from "crypto";
 
 type T_MakeQueryKey = {

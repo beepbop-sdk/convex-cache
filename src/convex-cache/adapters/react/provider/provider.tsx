@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import type { T_SchemaMap } from "../../../types/schema-map";
-import { useLocalDb as useLocalDbDefault } from "@bigbang-sdk/local-db";
+import { useLocalDb as useLocalDbDefault } from "@bb-sdk/local-db";
 
 type T_ConvexCacheContext = {
   schemaMap: T_SchemaMap | undefined;
