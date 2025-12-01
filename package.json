@@ -21,7 +21,7 @@
   ],
   "type": "module",
   "exports": {
-    "./convex": "./dist/convex/index.js",
+    ".": "./dist/convex-cache/index.js",
     "./core/*": "./dist/convex-cache/core/*.js",
     "./react": "./dist/convex-cache/adapters/react/index.js",
     "./next": "./dist/convex-cache/adapters/next/index.js",

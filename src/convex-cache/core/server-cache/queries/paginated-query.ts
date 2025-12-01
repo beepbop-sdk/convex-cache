@@ -16,7 +16,6 @@ export const _useCachedPaginatedQueryServer = <Q extends PQ_Query>({ query, args
   const raw = usePaginatedQuery(query, args, options);
 
   useEffect(() => {
-    console.log("running");
     if (args === "skip") return;
     if (raw.isLoading) return;
     if (isDeepEqual(preloadedData, raw)) return;

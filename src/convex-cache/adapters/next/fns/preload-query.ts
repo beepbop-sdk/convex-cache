@@ -3,7 +3,7 @@ import { getFunctionName } from "convex/server";
 import { PQ_CachedResult, PQ_Query } from "../../../core/types/types/paginated-query";
 import { Q_Query, Q_Result } from "../../../core/types/types/query";
 import { PQ_ArgsPreloaded, PQ_OptionsPreloaded, Q_ArgsPreloaded, Q_OptionsPreloaded } from "../types/preloaded";
-import { T_SchemaMap } from "../../../../convex/types/schema-map";
+import { T_SchemaMap } from "../../../types/schema-map";
 import { fetchSchemaFromMap } from "../../../core/helpers/utils/fetch-schema-from-map";
 
 export type PreloadQueryReturn<Q extends Q_Query | PQ_Query> = Q extends PQ_Query ? PQ_CachedResult<Q> | undefined : Q_Result<Q> | undefined;

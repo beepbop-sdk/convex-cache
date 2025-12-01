@@ -4,7 +4,7 @@ import { useClientCache } from "../helpers/hooks/use-client-cache";
 import { getFunctionName } from "convex/server";
 import { useMemo } from "react";
 import { PQ_Query, PQ_Args, PQ_Result, PQ_CachedResult } from "../../types/types/paginated-query";
-import { T_SchemaMap } from "../../../../convex";
+import type { T_SchemaMap } from "../../../types/schema-map";
 import { fetchSchemaFromMap } from "../../helpers/utils/fetch-schema-from-map";
 import { useLocalDb as useLocalDbDefault } from "@bigbang-sdk/local-db";
 

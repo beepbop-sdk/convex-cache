@@ -2,7 +2,7 @@ import type { ZodType } from "zod";
 import { convertPaginatedSchemaForClient } from "./convert-paginated-schema";
 import type { PaginationResult } from "convex/server";
 import type { UsePaginatedQueryResult } from "convex/react";
-import type { T_SchemaMap } from "../../../../convex/types/schema-map";
+import type { T_SchemaMap } from "../../../types/schema-map";
 import type { ValidatorJSON } from "convex/values";
 import { validatorFromJSON } from "../../../../validation";
 import { convexToZod } from "convex-helpers/server/zod4";

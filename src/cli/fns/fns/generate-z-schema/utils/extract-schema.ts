@@ -9,31 +9,61 @@ import type { ValidatorJSON } from "convex/values";
 import { findFunctionReference } from "./find-fn-ref";
 import type { SchemaEntry } from "../generate";
 
-type HasReturnsJson = {
-  __returnsJson?: ValidatorJSON;
+type ConvexQueryExport = {
+  isQuery?: boolean;
+  isPublic?: boolean;
+  exportReturns?: () => string | null;
 };
 
-const isConvexFn = (value: unknown): boolean => {
+/**
+ * A Convex query we can inspect:
+ * - must be isQuery
+ * - must be isPublic
+ * - must have exportReturns() function
+ */
+const isConvexFn = (value: unknown): value is ConvexQueryExport => {
   if (!value || (typeof value !== "function" && typeof value !== "object")) {
     return false;
   }
-  const maybeFn = value as { isQuery?: boolean; isPublic?: boolean };
-  return Boolean(maybeFn.isQuery && maybeFn.isPublic);
+  const v = value as any;
+  return Boolean(v.isQuery && v.isPublic && typeof v.exportReturns === "function");
 };
 
-const hasReturnsJson = (value: unknown): value is HasReturnsJson => {
-  return !!value && (typeof value === "function" || typeof value === "object") && "__returnsJson" in (value as any);
+/**
+ * Returns true if exportReturns() yields a non-null string.
+ * Returns false if null OR if calling exportReturns() throws.
+ */
+const fetchReturnsString = (value: ConvexQueryExport): string | null => {
+  try {
+    const result = value.exportReturns?.();
+    return typeof result === "string" && result.length > 0 ? result : null;
+  } catch {
+    return null;
+  }
+};
+
+/**
+ * Parse returnsJsonString → ValidatorJSON
+ * Returns null on parse error.
+ */
+const parseReturnsValidatorJson = ({ returnsString, fnName }: { returnsString: string; fnName: string }) => {
+  try {
+    return JSON.parse(returnsString) as ValidatorJSON;
+  } catch (err) {
+    console.warn(`⚠️ Failed to parse return JSON for ${fnName}\nRaw: ${returnsString}`, err);
+    return null;
+  }
 };
 
 export const extractSchema = async (file: string, api: AnyApi, convexDir: string): Promise<SchemaEntry[]> => {
   const entries: SchemaEntry[] = [];
 
-  // Dynamically import the Convex module
+  // Load module dynamically
   let mod: Record<string, unknown>;
   try {
     mod = (await import(pathToFileURL(file).href)) as Record<string, unknown>;
   } catch (err) {
-    console.warn(`⚠️  Failed to import ${file}:`, err);
+    console.warn(`⚠️ Failed to import ${file}:`, err);
     return entries;
   }
 
@@ -41,19 +71,28 @@ export const extractSchema = async (file: string, api: AnyApi, convexDir: string
   const modulePath = relativePath.replace(/\.(ts|js)$/, "");
 
   for (const [exportName, value] of Object.entries(mod)) {
+    // Check if the value is a Convex query function
     if (!isConvexFn(value)) continue;
-    if (!hasReturnsJson(value)) continue;
 
+    // Fetch the returns value as a string
+    const returnsString = fetchReturnsString(value);
+    if (!returnsString) continue;
+
+    // Find the function reference
     const fnRef = findFunctionReference(api, modulePath, exportName);
     if (!fnRef) continue;
 
+    // Get the function name
     const fnName = getFunctionName(fnRef);
-    const schemaJson = (value as HasReturnsJson).__returnsJson!;
+
+    // Parse the returns value as a ValidatorJSON
+    const returnsValidatorJson = parseReturnsValidatorJson({ returnsString, fnName });
+    if (!returnsValidatorJson) continue;
 
     entries.push({
       fnName,
       schemaJson: {
-        returns: schemaJson,
+        returns: returnsValidatorJson,
       },
     });
   }

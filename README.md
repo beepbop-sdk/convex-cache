@@ -85,48 +85,9 @@ The server cache (with Next.js) leverages Next.js's native caching system, integ
 
 ## Setup
 
-### Step 1: Setup Convex Queries with Schema Support
+### Generate Schema Map
 
-Create a utility file to wrap your Convex queries with schema support. You can use either `vQuery` (for Convex validators) or `zQuery` (for Zod schemas). See the [Zod Support](#zod-support) section for `zQuery` setup instructions.
-
-#### Using vQuery (Convex Validators)
-
-Create a `convex/utils/vQuery.ts` file:
-
-```typescript
-import { NoOp, customQuery } from "convex-helpers/server/customFunctions";
-import { query } from "../_generated/server";
-import { vQueryImpl } from "convex-cache/convex";
-
-export const baseVQuery = customQuery(query, NoOp);
-
-export const vQuery = vQueryImpl(baseVQuery);
-```
-
-Then use it in your queries:
-
-```typescript
-import { vQuery } from "./utils/vQuery";
-import { v } from "convex/values";
-
-export const getUser = vQuery({
-  args: { userId: v.id("users") },
-  returns: v.object({
-    id: v.id("users"),
-    name: v.string(),
-    email: v.string(),
-  }),
-  handler: async (ctx, args) => {
-    return await ctx.db.get(args.userId);
-  },
-});
-```
-
-When you wrap your queries with `vQuery`, it becomes eligible to be added to the schema map. If a query is written without the `vQuery` or `zQuery` wrapper, it will be skipped from schema generation and won't be eligible to be used with `convex-cache` hooks. However, they can still be used with Convex's native hooks.
-
-### Step 2: Generate Schema Map
-
-Use the CLI tool to generate a schema map from your Convex functions:
+Use `convex-cache dev` instead of `convex dev` to generate a schema map from your Convex functions:
 
 ```bash
 npx convex-cache dev
@@ -374,46 +335,7 @@ function UserList({ preloadedData }) {
 
 ## Zod Support
 
-If you prefer using Zod schemas instead of Convex validators, you can use `zQuery` instead of `vQuery`. This allows you to define your query schemas using Zod's validation library.
-
-### Setup zQuery
-
-Create a `convex/utils/zQuery.ts` file:
-
-```typescript
-import { NoOp } from "convex-helpers/server/customFunctions";
-import { zCustomQuery } from "convex-helpers/server/zod4";
-import { query } from "../_generated/server";
-import { zQueryImpl } from "convex-cache/convex";
-
-export const baseZQuery = zCustomQuery(query, NoOp);
-
-export const zQuery = zQueryImpl(baseZQuery);
-```
-
-### Using zQuery in Your Queries
-
-Once set up, you can use `zQuery` with Zod schemas:
-
-```typescript
-import { zQuery } from "./utils/zQuery";
-import { z } from "zod";
-
-export const getUser = zQuery({
-  args: { userId: z.string() },
-  returns: z.object({
-    id: z.string(),
-    name: z.string(),
-    email: z.string().email(),
-    age: z.number().int().min(0).optional(),
-  }),
-  handler: async (ctx, args) => {
-    return await ctx.db.get(args.userId);
-  },
-});
-```
-
-Both `vQuery` and `zQuery` work seamlessly with `convex-cache`. The CLI tool automatically generates the appropriate schemas regardless of which approach you choose.
+If you prefer using Zod schemas instead of Convex validators, you can set up Convex with Zod. This allows you to define your query schemas using Zod's validation library and works seamlessly with `convex-cache`. See the [Zod Validation documentation](https://github.com/get-convex/convex-helpers/blob/main/packages/convex-helpers/README.md#zod-validation) for setup instructions.
 
 ## License
 

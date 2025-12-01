@@ -11,7 +11,7 @@ export const buildSchemaFileTs = (schemaEntries: SchemaEntry[]): string => {
 
   return `// Auto-generated file - do not edit manually
 // This file contains Convex ValidatorJSON definitions derived from \`returns\` in vQuery definitions.
-import type { T_SchemaMap } from "convex-cache/convex";
+import type { T_SchemaMap } from "convex-cache";
 
 export const schemaMap: T_SchemaMap = {
 ${schemaMapEntries.join("\n")}
@@ -43,7 +43,7 @@ export const buildSchemaDtsFile = (): string => {
   return `// Auto-generated file - do not edit manually
 // Type declarations for the generated schemaMap (ValidatorJSON per function).
 
-import type { T_SchemaMap } from "convex-cache/convex";
+import type { T_SchemaMap } from "convex-cache";
 
 export declare const schemaMap: T_SchemaMap;
 `;
