@@ -1,9 +1,10 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { ShellRunner, ShellRunnerError } from "../../lib/shell-runner.js";
-import { generateZSchema } from "./generate-z-schema-runner.js";
+import { runCmd, runFileCmd } from "../../lib/package-cmds.js";
 
 export interface ConvexRunnerOptions {
-  convexCmd: string;
-  convexDir: string;
+  skipConvex?: boolean;
 }
 
 /**
@@ -12,13 +13,11 @@ export interface ConvexRunnerOptions {
  */
 export class ConvexRunner {
   private readonly tasks = new ShellRunner();
-  private readonly convexCmd: string;
-  private readonly convexDir: string;
+  private readonly skipConvex: boolean;
   private isRunning = false;
 
-  constructor({ convexCmd, convexDir }: ConvexRunnerOptions) {
-    this.convexCmd = convexCmd;
-    this.convexDir = convexDir;
+  constructor({ skipConvex = false }: ConvexRunnerOptions) {
+    this.skipConvex = skipConvex;
   }
 
   get running(): boolean {
@@ -34,9 +33,16 @@ export class ConvexRunner {
     this.tasks.cancelAll();
   };
 
+  private resolveCurrentPath = (): string => {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    return __dirname;
+  };
+
   /**
    * Run the Convex command once, then regenerate the Zod schema.
    * If a run is already in progress, this is a no-op.
+   * If skipConvex is true, skips the Convex command and only generates schemas.
    */
   runOnce = async (): Promise<void> => {
     if (this.isRunning) return;
@@ -45,13 +51,24 @@ export class ConvexRunner {
     this.tasks.resetCancelled();
 
     try {
-      await this.tasks.run(this.convexCmd, {
-        kind: "convex",
-        label: "➡️  Uploading functions to Convex...",
-        successMessage: "✅ Convex functions uploaded",
-      });
+      if (!this.skipConvex) {
+        const convexCmd = await runCmd("convex dev --once");
 
-      await generateZSchema({ convexDir: this.convexDir });
+        await this.tasks.run(convexCmd, {
+          kind: "convex",
+          label: "➡️  Uploading functions to Convex...",
+          successMessage: "✅ Convex functions uploaded",
+        });
+      }
+
+      const generateSchemaPath = path.join(this.resolveCurrentPath(), "generate-z-schema/generate.js");
+      const generateSchemaCmd = await runFileCmd(generateSchemaPath);
+
+      await this.tasks.run(generateSchemaCmd, {
+        kind: "schema",
+        label: "➡️  Generating Zod schemas...",
+        successMessage: "✅  Zod schemas generated",
+      });
 
       console.log(`\n👀 Watching for any changes...`);
     } catch (err) {

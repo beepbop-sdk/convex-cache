@@ -1,11 +1,17 @@
-import { ZodType } from "zod";
-import { AnyApi } from "convex/server";
-import { pathToFileURL } from "node:url";
+// utils/extract-schema.ts
 import path from "node:path";
-import { findFunctionReference } from "./find-fn-ref";
+import { pathToFileURL } from "node:url";
+
+import type { AnyApi } from "convex/server";
 import { getFunctionName } from "convex/server";
-import { ZOD_JSON } from "@bigbang-sdk/zod-json";
-import { SchemaEntry } from "../generate";
+import type { ValidatorJSON } from "convex/values";
+
+import { findFunctionReference } from "./find-fn-ref";
+import type { SchemaEntry } from "../generate";
+
+type HasReturnsJson = {
+  __returnsJson?: ValidatorJSON;
+};
 
 const isConvexFn = (value: unknown): boolean => {
   if (!value || (typeof value !== "function" && typeof value !== "object")) {
@@ -15,13 +21,14 @@ const isConvexFn = (value: unknown): boolean => {
   return Boolean(maybeFn.isQuery && maybeFn.isPublic);
 };
 
-const hasZReturn = (value: unknown): value is { __zReturn: ZodType } => {
-  return !!value && (typeof value === "function" || typeof value === "object") && "__zReturn" in (value as any) && Boolean((value as any).__zReturn);
+const hasReturnsJson = (value: unknown): value is HasReturnsJson => {
+  return !!value && (typeof value === "function" || typeof value === "object") && "__returnsJson" in (value as any);
 };
 
 export const extractSchema = async (file: string, api: AnyApi, convexDir: string): Promise<SchemaEntry[]> => {
   const entries: SchemaEntry[] = [];
 
+  // Dynamically import the Convex module
   let mod: Record<string, unknown>;
   try {
     mod = (await import(pathToFileURL(file).href)) as Record<string, unknown>;
@@ -31,30 +38,24 @@ export const extractSchema = async (file: string, api: AnyApi, convexDir: string
   }
 
   const relativePath = path.relative(convexDir, file);
-  const modulePath = relativePath.replace(/\.ts$/, "");
+  const modulePath = relativePath.replace(/\.(ts|js)$/, "");
 
   for (const [exportName, value] of Object.entries(mod)) {
-    if (!hasZReturn(value)) continue;
     if (!isConvexFn(value)) continue;
-
-    const zReturn = value.__zReturn;
+    if (!hasReturnsJson(value)) continue;
 
     const fnRef = findFunctionReference(api, modulePath, exportName);
     if (!fnRef) continue;
 
     const fnName = getFunctionName(fnRef);
+    const schemaJson = (value as HasReturnsJson).__returnsJson!;
 
-    try {
-      const jsonSchema = ZOD_JSON.zodToJson(zReturn, { name: fnName });
-      entries.push({
-        fnName,
-        schema: {
-          output: jsonSchema,
-        },
-      });
-    } catch (error) {
-      console.error(`Error converting schema for ${fnName}:`, error);
-    }
+    entries.push({
+      fnName,
+      schemaJson: {
+        returns: schemaJson,
+      },
+    });
   }
 
   return entries;

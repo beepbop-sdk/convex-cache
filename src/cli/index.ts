@@ -10,9 +10,9 @@ program.name("convex-cache").description("Upload Convex functions & generate Zod
 program
   .command("dev")
   .description("Runs `convex dev` and generates Zod schemas while watching for changes")
-  .option("-d, --dir <convexDir>", "Path to the convex directory", "convex")
+  .option("--schema-only", "Only generate schemas, skip running convex dev", false)
   .action(async (opts) => {
-    await dev({ convexDir: opts.dir });
+    await dev({ schemaOnly: opts.schemaOnly });
   });
 
 // Let Commander show help by default if no args are provided

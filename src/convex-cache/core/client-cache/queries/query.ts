@@ -4,14 +4,14 @@ import { useQueryKey } from "../helpers/hooks/use-query-key";
 import { useClientCache } from "../helpers/hooks/use-client-cache";
 import { useMemo } from "react";
 import { Q_Query, Q_Args, Q_Result } from "../../types/types/query";
-import { ZSchemaMap } from "../../../../convex";
+import { T_SchemaMap } from "../../../../convex";
 import { useLocalDb as useLocalDbDefault } from "@bigbang-sdk/local-db";
 import { fetchSchemaFromMap } from "../../helpers/utils/fetch-schema-from-map";
 
 export type T_UseCachedQueryClient<Q extends Q_Query> = {
   query: Q;
   args: Q_Args<Q>;
-  schemaMap: ZSchemaMap;
+  schemaMap: T_SchemaMap;
   useLocalDb: typeof useLocalDbDefault<Q_Result<Q>>;
 };
 

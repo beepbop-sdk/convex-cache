@@ -1,32 +1,29 @@
 // src/cli/fns/dev.ts
-
-import path from "node:path";
 import { DirWatcher } from "../lib/dir-watcher.js";
 import { ConvexRunner } from "./fns/convex-runner.js";
 import { runCmd } from "../lib/package-cmds.js";
+import { getConvexDir } from "../lib/convex-config.js";
 
 interface DevOptions {
-  /** Path to the Convex directory (relative or absolute). */
-  convexDir: string;
+  /** If true, only generate schemas and skip running convex dev. */
+  schemaOnly?: boolean;
 }
 
 /**
  * Start a one-off Convex dev run and then watch the Convex directory
  * for changes, re-running Convex + schema generation on each change.
+ * If schemaOnly is true, skip the Convex dev step and only generate schemas.
  */
-export const dev = async ({ convexDir }: DevOptions): Promise<void> => {
-  const absoluteDir = path.resolve(convexDir);
-
+export const dev = async ({ schemaOnly = false }: DevOptions): Promise<void> => {
   const convexRunner = new ConvexRunner({
-    convexCmd: await runCmd("convex dev --once"),
-    convexDir: absoluteDir,
+    skipConvex: schemaOnly,
   });
 
   // Initial run – if this fails, don't bother watching.
   try {
     await convexRunner.runOnce();
   } catch (err) {
-    console.error("⚠️  Initial Convex dev run failed. Not starting watcher.", err);
+    console.error("⚠️  Initial run failed. Not starting watcher.", err);
     process.exit(1);
   }
 
@@ -36,7 +33,7 @@ export const dev = async ({ convexDir }: DevOptions): Promise<void> => {
   let rebuildPromise: Promise<void> = Promise.resolve();
 
   const watcher = new DirWatcher({
-    rootDir: absoluteDir,
+    rootDir: getConvexDir(),
     recursive: true,
     debounceMs: 200,
     shouldIgnore,

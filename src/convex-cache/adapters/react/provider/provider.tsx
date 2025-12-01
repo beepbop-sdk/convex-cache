@@ -1,9 +1,9 @@
 import { createContext, useContext } from "react";
-import { ZSchemaMap } from "../../../../convex";
+import { T_SchemaMap } from "../../../../convex";
 import { useLocalDb as useLocalDbDefault } from "@bigbang-sdk/local-db";
 
 type T_ConvexCacheContext = {
-  schemaMap: ZSchemaMap | undefined;
+  schemaMap: T_SchemaMap | undefined;
   useLocalDb: typeof useLocalDbDefault<unknown> | undefined;
 };
 
@@ -14,7 +14,7 @@ const convexCacheContext = createContext<T_ConvexCacheContext>({
 
 type T_ConvexCacheProvider = {
   children: React.ReactNode;
-  schemaMap: ZSchemaMap;
+  schemaMap: T_SchemaMap;
   useLocalDb?: typeof useLocalDbDefault<unknown>;
 };
 

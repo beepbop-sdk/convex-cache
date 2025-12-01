@@ -1,9 +1,3 @@
-import type { JsonSchema } from "@bigbang-sdk/zod-json";
+import type { ValidatorJSON } from "convex/values";
 
-// export type ZSchemaMap = {
-//   [key: string]: {
-//     output: JsonSchema;
-//   };
-// };
-
-export type ZSchemaMap = Record<string, { output: JsonSchema<unknown> }>;
+export type T_SchemaMap = Record<string, { returns: ValidatorJSON }>;

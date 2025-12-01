@@ -3,7 +3,7 @@ import { getFunctionName } from "convex/server";
 import { PQ_CachedResult, PQ_Query } from "../../../core/types/types/paginated-query";
 import { Q_Query, Q_Result } from "../../../core/types/types/query";
 import { PQ_ArgsPreloaded, PQ_OptionsPreloaded, Q_ArgsPreloaded, Q_OptionsPreloaded } from "../types/preloaded";
-import { ZSchemaMap } from "../../../../convex/types/schema-map";
+import { T_SchemaMap } from "../../../../convex/types/schema-map";
 import { fetchSchemaFromMap } from "../../../core/helpers/utils/fetch-schema-from-map";
 
 export type PreloadQueryReturn<Q extends Q_Query | PQ_Query> = Q extends PQ_Query ? PQ_CachedResult<Q> | undefined : Q_Result<Q> | undefined;
@@ -12,7 +12,7 @@ export type T_PreloadQueryParams<Q extends Q_Query | PQ_Query> = {
   query: Q;
   args: Q_ArgsPreloaded<Q> | PQ_ArgsPreloaded<Q>;
   options?: Q_OptionsPreloaded<Q> | PQ_OptionsPreloaded<Q>;
-  schemaMap: ZSchemaMap;
+  schemaMap: T_SchemaMap;
 };
 
 export async function preloadQuery<Q extends Q_Query | PQ_Query>(params: T_PreloadQueryParams<Q>): Promise<PreloadQueryReturn<Q>> {

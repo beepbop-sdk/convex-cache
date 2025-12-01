@@ -1,7 +1,25 @@
 import { AnyApi } from "convex/server";
 import { pathToFileURL } from "node:url";
-import path from "node:path";
+import fg from "fast-glob";
 import fs from "node:fs";
+import path from "node:path";
+import { getConvexDir } from "../../../../lib/convex-config.js";
+
+export const loadConvex = async () => {
+  const convexDir = getConvexDir();
+
+  if (!fs.existsSync(convexDir)) {
+    console.warn('⚠️  No "convex" directory found in this project. Skipping schema generation.');
+    return;
+  }
+
+  const api = await loadConvexApi(convexDir);
+  if (!api) return;
+
+  const files = await findConvexSourceFiles(convexDir);
+
+  return { convexDir, api, files };
+};
 
 export const loadConvexApi = async (convexDir: string): Promise<AnyApi | null> => {
   const candidates = [
@@ -28,4 +46,12 @@ export const loadConvexApi = async (convexDir: string): Promise<AnyApi | null> =
     console.warn(`⚠️  Failed to import ${existing}:`, err);
     return null;
   }
+};
+
+const findConvexSourceFiles = async (convexDir: string): Promise<string[]> => {
+  return fg("**/*.{ts,js}", {
+    cwd: convexDir,
+    ignore: ["_generated/**/*.{ts,js}"],
+    absolute: true,
+  });
 };

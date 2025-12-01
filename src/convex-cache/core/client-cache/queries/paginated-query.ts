@@ -4,7 +4,7 @@ import { useClientCache } from "../helpers/hooks/use-client-cache";
 import { getFunctionName } from "convex/server";
 import { useMemo } from "react";
 import { PQ_Query, PQ_Args, PQ_Result, PQ_CachedResult } from "../../types/types/paginated-query";
-import { ZSchemaMap } from "../../../../convex";
+import { T_SchemaMap } from "../../../../convex";
 import { fetchSchemaFromMap } from "../../helpers/utils/fetch-schema-from-map";
 import { useLocalDb as useLocalDbDefault } from "@bigbang-sdk/local-db";
 
@@ -12,7 +12,7 @@ export type T_UseCachedPaginatedQueryClient<Q extends PQ_Query> = {
   query: Q;
   args: PQ_Args<Q>;
   options: { initialNumItems: number };
-  schemaMap: ZSchemaMap;
+  schemaMap: T_SchemaMap;
   useLocalDb: typeof useLocalDbDefault<PQ_CachedResult<Q>>;
 };
 

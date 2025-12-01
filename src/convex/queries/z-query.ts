@@ -1,4 +1,7 @@
 import { z, ZodType } from "zod";
+import { zodToConvex } from "convex-helpers/server/zod4";
+import { validatorToJSON } from "../../validation";
+import type { ValidatorJSON } from "convex/values";
 
 type ZodShape = Record<string, ZodType>;
 
@@ -44,14 +47,17 @@ export const zQueryImpl = <TQueryFn extends (def: any) => any>(baseQuery: TQuery
     const maybeReturns = (def as { returns?: unknown }).returns;
     const zReturn = toZodReturnSchema(maybeReturns);
 
-    if (zReturn) {
-      Object.defineProperty(fn, "__zReturn", {
-        value: zReturn,
-        writable: false,
-        configurable: false,
-        enumerable: false,
-      });
-    }
+    if (!zReturn) throw new Error("Invalid returns schema");
+
+    const vReturn = zodToConvex(zReturn);
+    const returnsJson: ValidatorJSON = validatorToJSON(vReturn);
+
+    Object.defineProperty(fn, "__returnsJson", {
+      value: returnsJson,
+      writable: false,
+      configurable: false,
+      enumerable: false,
+    });
 
     return fn;
   }) as TQueryFn;

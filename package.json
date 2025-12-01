@@ -25,7 +25,8 @@
     "./core/*": "./dist/convex-cache/core/*.js",
     "./react": "./dist/convex-cache/adapters/react/index.js",
     "./next": "./dist/convex-cache/adapters/next/index.js",
-    "./next/server": "./dist/convex-cache/adapters/next/server.js"
+    "./next/server": "./dist/convex-cache/adapters/next/server.js",
+    "./validation": "./dist/validation/index.js"
   },
   "bin": {
     "convex-cache": "dist/cli/index.js"
@@ -38,7 +39,6 @@
     "@bigbang-sdk/deep-equal": "^0.0.1",
     "@bigbang-sdk/deep-sort": "^0.0.1",
     "@bigbang-sdk/local-db": "^0.0.7",
-    "@bigbang-sdk/zod-json": "^0.0.9",
     "commander": "^14.0.2",
     "convex": "^1.29.3",
     "convex-helpers": "^0.1.106",
