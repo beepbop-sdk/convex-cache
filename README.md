@@ -81,7 +81,7 @@ The server cache (with Next.js) leverages Next.js's native caching system, integ
 
 ### Other frameworks for server caching
 
-`convex-cache` currently offers adapter for Next.js. However, custom adapters can be built for other frameworks / patterns by leveraging code from the `core` folder in `convex-cache` source code.
+`convex-cache` currently includes adapter for Next.js. However, custom adapters can be built for other frameworks / patterns by leveraging code from the `core` folder in `convex-cache` source code.
 
 ## Setup
 
