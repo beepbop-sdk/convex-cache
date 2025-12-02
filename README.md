@@ -72,7 +72,7 @@ The server cache (with Next.js) leverages Next.js's native caching system, integ
 2. Next.js serves the page (with cached data) from the nearest edge location (Singapore - very fast)
 3. Page connects to Convex (USA)
 4. Convex streams changes
-5. `convex-cache` automatically updates the cache in local DB
+5. `convex-cache` automatically revalidates the cache in Next.js's native cache using an internal server action.
 
 **Note:**
 
