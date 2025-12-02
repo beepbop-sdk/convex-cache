@@ -1,7 +1,7 @@
 import { usePaginatedQuery } from "convex/react";
 import { PQ_Query, PQ_Args, PQ_Result, PQ_CachedResult, PQ_Item } from "../../types/types/paginated-query";
 import { useEffect } from "react";
-import { isDeepEqual } from "@bb-sdk/deep-equal";
+import { isDeepEqual } from "@bb-labs/deep-equal";
 import { PQ_ArgsPreloaded } from "../../../adapters/next/types/preloaded";
 
 export type T_UseCachedPaginatedQueryServer<Q extends PQ_Query> = {

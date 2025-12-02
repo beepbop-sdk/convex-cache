@@ -1,7 +1,7 @@
 import { useQuery } from "convex/react";
 import { Q_Query, Q_Args, Q_Result } from "../../types/types/query";
 import { useEffect } from "react";
-import { isDeepEqual } from "@bb-sdk/deep-equal";
+import { isDeepEqual } from "@bb-labs/deep-equal";
 import { Q_ArgsPreloaded } from "../../../adapters/next/types/preloaded";
 
 export type T_UseCachedQueryServer<Q extends Q_Query> = {

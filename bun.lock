@@ -4,9 +4,9 @@
     "": {
       "name": "convex-cache",
       "dependencies": {
-        "@bb-sdk/deep-equal": "^0.0.1",
-        "@bb-sdk/deep-sort": "^0.0.1",
-        "@bb-sdk/local-db": "^0.0.1",
+        "@bb-labs/deep-equal": "^0.0.1",
+        "@bb-labs/deep-sort": "^0.0.1",
+        "@bb-labs/local-db": "^0.0.1",
         "commander": "^14.0.2",
         "convex": "^1.29.3",
         "convex-helpers": "^0.1.106",
@@ -26,11 +26,11 @@
     },
   },
   "packages": {
-    "@bb-sdk/deep-equal": ["@bb-sdk/deep-equal@0.0.1", "", { "dependencies": { "@bb-sdk/deep-sort": "^0.0.1", "fast-deep-equal": "^3.1.3", "superjson": "^2.2.6" }, "peerDependencies": { "typescript": "^5" } }, "sha512-w6U3gXV+eezXqUwYEDNbcRUFXCfjnnD51cmdOSxMbmYtw2/FAp8H5pgbYQkoqwwuSdH+fyvf+mbM2At6NmiT7Q=="],
+    "@bb-labs/deep-equal": ["@bb-labs/deep-equal@0.0.1", "", { "dependencies": { "@bb-labs/deep-sort": "^0.0.1", "fast-deep-equal": "^3.1.3", "superjson": "^2.2.6" }, "peerDependencies": { "typescript": "^5" } }, "sha512-KGcJez6yriC4r2z02lAUvIwrtpFmC4M5mX5K6Nu+RAKzvqcyLSrYJuQfKxa8AD3VWjz2Iq/BxWQ6MRXulap0Fg=="],
 
-    "@bb-sdk/deep-sort": ["@bb-sdk/deep-sort@0.0.1", "", { "dependencies": { "@tamtamchik/json-deep-sort": "^1.4.1", "superjson": "^2.2.6" }, "peerDependencies": { "typescript": "^5" } }, "sha512-8u4/O/waiPz5VG1jtjTWus3GdAK480rTVytxHnFqzmr/PgnUq/Ka1fruZ638iB1Pn3/xwpKp3vwFEf24dfhEvw=="],
+    "@bb-labs/deep-sort": ["@bb-labs/deep-sort@0.0.1", "", { "dependencies": { "@tamtamchik/json-deep-sort": "^1.4.1", "superjson": "^2.2.6" }, "peerDependencies": { "typescript": "^5" } }, "sha512-csu0mICeVGAjOo2ERNv+icegp+A+CirdQTTnJtyuDCL9VXsHsArFby3aKsGt/KM93Zl8XeO7/gJ2WN9XPsAhgg=="],
 
-    "@bb-sdk/local-db": ["@bb-sdk/local-db@0.0.1", "", { "dependencies": { "@bb-sdk/deep-equal": "^0.0.1", "fast-deep-equal": "^3.1.3", "idb-keyval": "^6.2.2", "zod": "^4.1.12" }, "peerDependencies": { "react": "^19", "typescript": "^5" } }, "sha512-RCwhONn3ZlgWQFQNvzwP/jV4k8Qp3CxFrhG3klLtMsH4sdC7ZsdI1ecbyj6RLPYwmKCyM2qqUCjyl78+L+uNzA=="],
+    "@bb-labs/local-db": ["@bb-labs/local-db@0.0.1", "", { "dependencies": { "@bb-labs/deep-equal": "^0.0.1", "fast-deep-equal": "^3.1.3", "idb-keyval": "^6.2.2", "zod": "^4.1.12" }, "peerDependencies": { "react": "^19", "typescript": "^5" } }, "sha512-FADGkWGhPpmorwUCPBL7fat5nMEs4GxJ4jxDfNVDFlwqnsnW4N9Jyiujwzw7LBBPipNJVhAE+NLl6rEVNZGYGg=="],
 
     "@emnapi/runtime": ["@emnapi/runtime@1.7.1", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-PVtJr5CmLwYAU9PZDMITZoR5iAOShYREoR45EyyLrbntV50mdePTgUn4AmOw90Ifcj+x2kRjdzr1HP3RrNiHGA=="],
 

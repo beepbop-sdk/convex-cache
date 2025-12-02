@@ -2,7 +2,7 @@ import { T_UseCachedPaginatedQueryClient, _useCachedPaginatedQueryClient } from 
 import { Q_Query, PQ_Query, PQ_CachedResult, PQ_Item } from "../../../core/types";
 import { T_UseCachedQueryClient, _useCachedQueryClient } from "../../../core/client-cache/queries/query";
 import { useConvexProvider } from "../provider/provider";
-import { useLocalDb as useLocalDbDefault } from "@bb-sdk/local-db";
+import { useLocalDb as useLocalDbDefault } from "@bb-labs/local-db";
 
 type T_UseQuery<Q extends Q_Query> = Omit<T_UseCachedQueryClient<Q>, "schemaMap" | "useLocalDb">;
 type T_UsePaginatedQuery<Q extends PQ_Query> = Omit<T_UseCachedPaginatedQueryClient<Q>, "schemaMap" | "useLocalDb">;
