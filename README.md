@@ -50,7 +50,7 @@ The client cache stores query results in IndexedDb, enabling instant page loads.
 
 **Note:**
 
-1. If a user isn’t connected when the data changes, their next visit will show stale data. However, it is immediately revalidated once the page connects to Convex.
+1. If a user isn’t connected to Convex when the data for a query changes, their next visit will show stale data (from their local DB). However, it is immediately revalidated once the page connects to Convex.
 
 ### Server Cache
 
