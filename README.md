@@ -50,7 +50,7 @@ The client cache stores query results in IndexedDb, enabling instant page loads.
 
 **Note:**
 
-1. If a user is not connected to Convex at the time Convex data changes for a query, he will be served with stale data on next page visit (which will be instantly revalidated once the page connects to Convex again along with local DB cache)
+1. If a user isn’t connected when the data changes, their next visit will show stale data. However, it is immediately revalidated once the page connects to Convex.
 
 ### Server Cache
 
@@ -72,12 +72,12 @@ The server cache (with Next.js) leverages Next.js's native caching system, integ
 2. Next.js serves the page (with cached data) from the nearest edge location (Singapore - very fast)
 3. Page connects to Convex (USA)
 4. Convex streams changes
-5. `convex-cache` automatically revalidates the cache in Next.js's native cache using an internal server action.
+5. `convex-cache` automatically revalidates the cache in Next.js's native cache using an internal server action
 
 **Note:**
 
-1. In order for the Next.js cache to be revalidated, at least one user needs to be connected to Convex at the time when Convex data changes for a query. If at least one user is connected, the cache is updated for all subsequent users of that query.
-2. In no user is connected to Convex at the time Convex data changes for a query, the next request will serve stale data on `preloadQuery` (which will be instantly revalidated once the page connects to Convex again along with Next.js cache).
+1. The Next.js cache only revalidates if at least one user is connected to Convex when a query’s data changes. If someone is connected, all later users get fresh data.
+2. If no users are connected when the data changes, the next `preloadQuery` will return stale data. However, it will be revalidated instantly once the page connects to Convex.
 
 ### Other frameworks for server caching
 
